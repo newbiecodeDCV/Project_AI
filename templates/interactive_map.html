@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div id="map" style="height: 500px;"></div>
+
+<script>
+var startCoordinates = null;
+var endCoordinates = null;
+
+var map = L.map('map').setView([10.7769, 106.7009], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Hàm xử lý sự kiện click chuột trên bản đồ
+function onMapClick(e) {
+    if (!startCoordinates) {
+        startCoordinates = [e.latlng.lat, e.latlng.lng];
+        alert('Điểm bắt đầu đã được chọn: ' + startCoordinates);
+    } else if (!endCoordinates) {
+        endCoordinates =[e.latlng.lat, e.latlng.lng];
+        alert('Điểm kết thúc đã được chọn: ' + endCoordinates);
+
+        // Gửi tọa độ về server Flask để thực hiện thuật toán A*
+        sendDataToServer();
+    }
+}
+
+map.on('click', onMapClick);
+
+// Hàm gửi tọa độ về server Flask
+// Hàm gửi tọa độ về server Flask
+function sendDataToServer() {
+    console.log('Sending data to server:', { start: startCoordinates, end: endCoordinates });
+    fetch('/get_coordinates', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ start: startCoordinates, end: endCoordinates }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Xử lý kết quả từ server (ở đây có thể vẽ đường đi trên bản đồ)
+        drawPathOnMap(data.path);
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+    });
+}
+
+
+// Hàm vẽ đường đi trên bản đồ
+function drawPathOnMap(pathCoordinates) {
+    console.log('Received path coordinates:', pathCoordinates);
+    // Xóa các điểm đang có trên bản đồ (nếu có)
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+            map.removeLayer(layer);
+        }
+    });
+
+    // Vẽ đường đi
+    L.polyline(pathCoordinates, { color: 'blue' }).addTo(map);
+
+    // Đặt Marker cho mỗi điểm trên đường đi
+    pathCoordinates.forEach(coord => {
+        L.marker(coord, { icon: L.divIcon({ className: 'custom-div-icon' }) }).addTo(map);
+    });
+}
+</script>
+
+</body>
+</html>
