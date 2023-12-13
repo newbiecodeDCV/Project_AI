@@ -82,9 +82,6 @@ def astar(start, end, graph):
     return None
 
 
-# Giả định biến g đã được định nghĩa trước đó
-
-
 @app.route('/')
 def index():
     return render_template('interactive_map.html')
