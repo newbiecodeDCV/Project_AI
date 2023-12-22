@@ -88,12 +88,49 @@ new_point=[[21.01125,105.84794],
            [21.00969,105.84834],
            [21.00905,105.84825],
            [21.00969,105.8486],
-           [21.00937,105.8486]
-
+           [21.00937,105.8486],
+           #mới
+           [21.00773,105.84274],
+           [21.00778,105.84181],
+           [21.00807,105.84543],
+           [21.00799,105.84466],
+           [21.00789,105.84388],
+           [21.00784,105.84144],
+           [21.00817,105.84142],
+           [21.00868,105.84141],
+           [21.00873,105.84137],
+           [21.01058,105.84135],
+           [21.01058,105.84135],
+           [21.01212,105.84136],
+           [21.01267,105.84138],
+           [21.01267,105.84138],
+           [21.01410,105.84139],
+           [21.01457,105.84142],
+           [21.01503,105.84141],
+           [21.01503,105.84141],
+           [21.01607,105.84142],
+           [21.01508,105.84193],
+           [21.01508,105.84193],
+           [21.01556,105.84261],
+           [21.01603,105.84260],
+           [21.01606,105.84199],
+           [21.01560,105.84196],
+           [21.01007,105.84136],
+           [21.01171,105.84136],
+           [21.01344,105.84140],
+           [21.01559,105.84141],
+           [21.01509,105.84258],
+           [21.00956,105.84136],
+           [21.01623,105.84753],
+           [21.01428,105.84917],
+           [21.01255,105.84675],
+           [21.01211,105.84765],
+           [21.01010,105.84962],
            ]
 for i in range(len(new_point)) :
     key =f'new_point_{i+1}'
     coordinate_dict[key] = new_point[i]
+    
 
 # Tạo danh sách các cạnh
 
@@ -112,10 +149,11 @@ edge_list = [('point_14','point_12'),('point_12','point_14'),
              ('new_point_9','point_23'),('point_23','new_point_9'),
              ('point_24','point_23'),
              ('point_6','point_5'),('point_5','point_6'),
-             ('point_5','new_point_14'),
+             ('point_5','new_point_97'),('new_point_97','new_point_14'),
              ('new_point_10','new_point_14'),('new_point_14','new_point_10'),
-             ('new_point_14','point_5'),('point_5','new_point_14'),
-             ('point_21','point_15'),
+             ('new_point_14','new_point_97'),('new_point_97','new_point_14'),
+             ('point_5','new_point_97'),('new_point_97','point_5'),
+             ('point_21','point_15'),('new_point_14','new_point_98'),
              ('new_point_15','new_point_9'),('new_point_9','new_point_15'),
              ('new_point_15','new_point_16'),('new_point_16','new_point_15'),
              ('new_point_17','new_point_16'),('new_point_16','new_point_17'),
@@ -185,7 +223,25 @@ edge_list = [('point_14','point_12'),('point_12','point_14'),
              ('new_point_45','new_point_46'),('new_point_46','new_point_45'),
              ('new_point_52','new_point_53'),('new_point_53','new_point_52'),
              ('new_point_47','new_point_48'),('new_point_48','new_point_47'),
-             ('new_point_48','new_point_49'),('new_point_49','new_point_48')
+             ('new_point_48','new_point_49'),('new_point_49','new_point_48'),
+             ('point_2', 'new_point_66'),('new_point_66','new_point_67'),
+             ('new_point_67','new_point_68'),('new_point_68','new_point_64'),
+             ('new_point_64','new_point_65'),('new_point_65','new_point_69'),
+             ('new_point_65','new_point_70'),('new_point_69','new_point_70'),
+             ('new_point_70','new_point_72'),('new_point_72','new_point_94'),
+             ('new_point_94','new_point_89'),('new_point_89','new_point_74'),
+             ('new_point_74','new_point_90'),('new_point_90','new_point_75'),
+             ('new_point_75','new_point_77'),('new_point_77','new_point_91'),
+             ('new_point_91','new_point_78'),('new_point_78','new_point_79'),
+             ('new_point_79','new_point_81'),('new_point_81','new_point_92'),
+             ('new_point_81','new_point_84'),('new_point_84','new_point_81'),
+             ('new_point_81','new_point_92'),('new_point_92','new_point_82'),
+             ('new_point_84','new_point_88'),('new_point_88','new_point_84'),
+             ('new_point_88','new_point_87'),('new_point_87','new_point_88'),
+             ('new_point_86','new_point_87'),('new_point_87','new_point_86'),
+             ('new_point_86','new_point_85'),('new_point_85','new_point_86'),
+             ('new_point_85','new_point_93'),('new_point_93','new_point_85'),
+             ('new_point_84','new_point_93'),('new_point_93','new_point_84')
 ]
 
 
@@ -211,6 +267,7 @@ g = creat_graph(coordinate_dict, edge_list)
 node = 'new_point_1'
 neighbors = g.neighbors(node)
 print(neighbors)
+
 
 
 
